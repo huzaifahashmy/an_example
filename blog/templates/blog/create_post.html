@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Create Post - NexusBlog{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Write a New Story</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div style="color: #ef4444; font-size: 0.85rem; margin-top: 0.5rem;">
+                {{ field.errors|striptags }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+            <button type="submit" class="btn-primary" style="flex: 1; padding: 0.8rem; font-size: 1.1rem;">Publish
+                Story</button>
+            <a href="{% url 'index' %}" class="btn-primary"
+                style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); flex: 0; white-space: nowrap;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
