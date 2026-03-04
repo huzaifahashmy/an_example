@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Django Blog{% endblock %}</title>
-    <!-- Google Fonts -->
+    <title>{% block title %}NexusBlog{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --surface-color: #1e293b;
-            --primary-color: #3b82f6;
-            --primary-hover: #2563eb;
-            --text-main: #f8fafc;
+            --bg-color: #0f0f1a;
+            --surface-color: #1a1a2e;
+            --primary-color: #7c3aed;
+            --primary-hover: #6d28d9;
+            --accent-color: #a78bfa;
+            --text-main: #f1f5f9;
             --text-muted: #94a3b8;
-            --border-color: #334155;
-            --glass-bg: rgba(30, 41, 59, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --border-color: #2d2d4e;
+            --glass-bg: rgba(26, 26, 46, 0.8);
+            --glass-border: rgba(167, 139, 250, 0.15);
+            --danger-color: #ef4444;
         }
 
         * {
@@ -35,6 +37,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background-image: radial-gradient(ellipse at 20% 20%, rgba(124, 58, 237, 0.07) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(167, 139, 250, 0.05) 0%, transparent 50%);
         }
 
         /* Navbar */
@@ -60,30 +64,41 @@
         .brand {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-main);
             text-decoration: none;
             letter-spacing: -0.5px;
-            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            background: linear-gradient(to right, #a78bfa, #60a5fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         .nav-links a {
-            color: var(--text-main);
+            color: var(--text-muted);
             text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
+            font-weight: 500;
             transition: color 0.2s ease;
+            font-size: 0.95rem;
         }
 
         .nav-links a:hover {
-            color: var(--primary-color);
+            color: var(--accent-color);
+        }
+
+        .nav-username {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.95rem;
         }
 
         .btn-primary {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), #5b21b6);
             color: white;
-            padding: 0.6rem 1.2rem;
+            padding: 0.55rem 1.2rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
@@ -91,12 +106,71 @@
             display: inline-block;
             border: none;
             cursor: pointer;
+            font-size: 0.9rem;
         }
 
         .btn-primary:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, var(--primary-hover), #4c1d95);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.45);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 0.55rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--danger-color);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: inline-block;
+            border: 1px solid var(--danger-color);
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .btn-danger:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-edit {
+            background: transparent;
+            color: var(--accent-color);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: inline-block;
+            border: 1px solid var(--accent-color);
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .btn-edit:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
 
         /* Main Content */
@@ -108,6 +182,26 @@
             width: 100%;
         }
 
+        /* Alerts */
+        .alert {
+            padding: 0.9rem 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+        }
+
         /* Form Styles */
         .form-container {
             background: var(--surface-color);
@@ -116,13 +210,12 @@
             border: 1px solid var(--border-color);
             max-width: 600px;
             margin: 0 auto;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
         .form-container h2 {
             margin-bottom: 1.5rem;
             font-size: 1.8rem;
-            color: var(--text-main);
         }
 
         .form-group {
@@ -134,6 +227,7 @@
             margin-bottom: 0.5rem;
             color: var(--text-muted);
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .form-control {
@@ -150,13 +244,27 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
         }
 
         .form-control-file {
             width: 100%;
             color: var(--text-muted);
             padding: 0.5rem 0;
+        }
+
+        /* Help text and errors */
+        .helptext {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        ul.errorlist {
+            list-style: none;
+            color: #fca5a5;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
         }
 
         /* Grid */
@@ -172,14 +280,14 @@
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             display: flex;
             flex-direction: column;
         }
 
         .blog-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
             border-color: var(--primary-color);
         }
 
@@ -201,6 +309,13 @@
             transform: scale(1.05);
         }
 
+        .card-video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
         .card-content {
             padding: 1.5rem;
             flex: 1;
@@ -208,24 +323,41 @@
             flex-direction: column;
         }
 
-        .card-date {
-            font-size: 0.85rem;
-            color: var(--primary-color);
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 0.5rem;
+        }
+
+        .card-date {
+            font-size: 0.82rem;
+            color: var(--primary-color);
             font-weight: 600;
         }
 
+        .card-author {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
         .card-title {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
             line-height: 1.3;
         }
 
         .card-excerpt {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
             flex: 1;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
         }
 
         /* Footer */
@@ -234,7 +366,7 @@
             padding: 2rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border-color);
-            margin-top: auto;
+            font-size: 0.9rem;
         }
 
         .empty-state {
@@ -245,24 +377,47 @@
             border: 1px dashed var(--border-color);
             grid-column: 1 / -1;
         }
-        
+
         .empty-state h3 {
             margin-bottom: 1rem;
             color: var(--text-muted);
         }
+
+        /* Divider */
+        .form-divider {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 1.5rem 0;
+        }
     </style>
 </head>
+
 <body>
     <nav>
         <div class="nav-container">
             <a href="{% url 'index' %}" class="brand">NexusBlog</a>
             <div class="nav-links">
+                {% if user.is_authenticated %}
                 <a href="{% url 'create_post' %}" class="btn-primary">+ New Post</a>
+                <span class="nav-username">👤 {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="btn-secondary">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}" class="btn-primary">Sign Up</a>
+                {% endif %}
             </div>
         </div>
     </nav>
 
     <main>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
 
@@ -270,4 +425,5 @@
         <p>&copy; 2026 NexusBlog. All rights reserved.</p>
     </footer>
 </body>
+
 </html>

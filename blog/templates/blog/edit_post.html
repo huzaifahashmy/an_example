@@ -1,10 +1,10 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Create Post - NexusBlog{% endblock %}
+{% block title %}Edit Post - NexusBlog{% endblock %}
 
 {% block content %}
 <div class="form-container">
-    <h2>✍️ Write a New Story</h2>
+    <h2>✏️ Edit Story</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
@@ -17,8 +17,8 @@
         </div>
         {% endfor %}
         <div style="margin-top: 2rem; display: flex; gap: 1rem;">
-            <button type="submit" class="btn-primary" style="flex: 1; padding: 0.8rem; font-size: 1rem;">🚀 Publish
-                Story</button>
+            <button type="submit" class="btn-primary" style="flex: 1; padding: 0.8rem; font-size: 1rem;">💾 Save
+                Changes</button>
             <a href="{% url 'index' %}" class="btn-secondary">Cancel</a>
         </div>
     </form>

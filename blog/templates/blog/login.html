@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Sign In - NexusBlog{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>👋 Welcome back</h2>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Sign in to your NexusBlog account.</p>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}"
+                class="form-control" {% if field.value %}value="{{ field.value }}" {% endif %}
+                autocomplete="{% if 'password' in field.html_name %}current-password{% else %}username{% endif %}">
+            {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{%
+            endif %}
+        </div>
+        {% endfor %}
+        {% if form.non_field_errors %}
+        <div class="alert alert-error">{{ form.non_field_errors|striptags }}</div>
+        {% endif %}
+        <button type="submit" class="btn-primary"
+            style="width: 100%; padding: 0.8rem; font-size: 1rem; margin-top: 1rem;">Sign In</button>
+    </form>
+    <div class="form-divider">Don't have an account? <a href="{% url 'register' %}"
+            style="color: var(--accent-color);">Create one</a></div>
+</div>
+{% endblock %}

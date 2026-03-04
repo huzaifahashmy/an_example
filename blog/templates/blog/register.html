@@ -1,11 +1,12 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Create Post - NexusBlog{% endblock %}
+{% block title %}Register - NexusBlog{% endblock %}
 
 {% block content %}
 <div class="form-container">
-    <h2>✍️ Write a New Story</h2>
-    <form method="post" enctype="multipart/form-data">
+    <h2>🚀 Create an Account</h2>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Join NexusBlog and start sharing your stories.</p>
+    <form method="post">
         {% csrf_token %}
         {% for field in form %}
         <div class="form-group">
@@ -16,11 +17,10 @@
             endif %}
         </div>
         {% endfor %}
-        <div style="margin-top: 2rem; display: flex; gap: 1rem;">
-            <button type="submit" class="btn-primary" style="flex: 1; padding: 0.8rem; font-size: 1rem;">🚀 Publish
-                Story</button>
-            <a href="{% url 'index' %}" class="btn-secondary">Cancel</a>
-        </div>
+        <button type="submit" class="btn-primary"
+            style="width: 100%; padding: 0.8rem; font-size: 1rem; margin-top: 1rem;">Create Account</button>
     </form>
+    <div class="form-divider">Already have an account? <a href="{% url 'login' %}"
+            style="color: var(--accent-color);">Sign in</a></div>
 </div>
 {% endblock %}
