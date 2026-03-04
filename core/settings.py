@@ -30,10 +30,12 @@ SECRET_KEY = 'django-insecure-6l26o_8_wgg^8=c)4_y+$lr^2_y$q^&h-to=i%_f06cntm37jw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER_EXTERNAL_HOSTNAME' not in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['an-example.onrender.com', 'localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+CSRF_TRUSTED_ORIGINS = ['https://an-example.onrender.com']
 
 
 # Application definition
@@ -140,6 +142,8 @@ STORAGES = {
 }
 
 MEDIA_URL = '/media/'
+# Restore MEDIA_ROOT for urls.py compatibility
+MEDIA_ROOT = BASE_DIR / 'media'
 # Removed DEFAULT_FILE_STORAGE in favor of STORAGES['default']
 
 CLOUDINARY_STORAGE = {
