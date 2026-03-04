@@ -45,13 +45,13 @@ CSRF_TRUSTED_ORIGINS = ['https://an-example.onrender.com', 'https://*.onrender.c
 # Application definition
 
 INSTALLED_APPS = [
-    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',  # MUST be after staticfiles so WhiteNoise handles collectstatic
     'cloudinary',
     'blog',
 ]
