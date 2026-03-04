@@ -28,14 +28,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6l26o_8_wgg^8=c)4_y+$lr^2_y$q^&h-to=i%_f06cntm37jw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'RENDER_EXTERNAL_HOSTNAME' not in os.environ
+# TEMPORARILY SETTING DEBUG TO TRUE TO DIAGNOSE RENDER 500 ERROR
+DEBUG = True 
 
-ALLOWED_HOSTS = ['an-example.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['an-example.onrender.com', '.onrender.com', 'localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+# SECURE_PROXY_SSL_HEADER for Render's https proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-CSRF_TRUSTED_ORIGINS = ['https://an-example.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://an-example.onrender.com', 'https://*.onrender.com']
 
 
 # Application definition
