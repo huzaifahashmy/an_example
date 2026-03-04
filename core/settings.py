@@ -160,6 +160,12 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
+# Increase upload limits (50MB) and ensure Cloudinary handles videos correctly
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
+FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800
+# Note: dj-cloudinary-storage uses Cloudinary's auto-detection by default for FileFields, 
+# but increasing Django's internal limits is necessary for the server to accept the request.
+
 # Auth redirects
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
