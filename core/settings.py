@@ -27,7 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-6l26o_8_wgg^8=c)4_y+$lr^2_y$q^&h-to=i%_f06cntm37jw'
 
-DEBUG = True  # TEMP: diagnose New Post 500 error
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = 'RENDER_EXTERNAL_HOSTNAME' not in os.environ
 
 ALLOWED_HOSTS = ['an-example.onrender.com', '.onrender.com', 'localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')

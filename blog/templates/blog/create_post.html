@@ -11,9 +11,14 @@
         <div class="form-group">
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {{ field }}
-            {% if field.help_text %}<div class="helptext">{{ field.help_text }}</div>{% endif %}
-            {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{%
-            endif %}
+            {% if field.help_text %}
+            <div class="helptext">{{ field.help_text }}</div>
+            {% endif %}
+            {% if field.errors %}
+            <ul class="errorlist">
+                {% for e in field.errors %}<li>{{ e }}</li>{% endfor %}
+            </ul>
+            {% endif %}
         </div>
         {% endfor %}
         <div style="margin-top: 2rem; display: flex; gap: 1rem;">
