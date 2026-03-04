@@ -14,7 +14,7 @@
 
 <div class="blog-grid">
     {% for post in posts %}
-    <article class="blog-card" style="cursor: pointer;" onclick="window.location='{% url 'post_detail' post.pk %}'">
+    <article class="blog-card" style="cursor: pointer;" onclick="window.location='{% url 'post_detail' post.pk %}';">
         {% if post.image %}
         <div class="card-img-wrapper">
             <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img">
