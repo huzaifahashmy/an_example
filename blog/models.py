@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from cloudinary_storage.storage import VideoCloudinaryStorage
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 
 class Post(models.Model):
@@ -16,7 +16,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     video = models.FileField(
         upload_to='blog_videos/',
-        storage=VideoCloudinaryStorage(),
+        storage=MediaCloudinaryStorage(),
         blank=True,
         null=True
     )
